@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+    }
+    .valid-message {
+      color: green;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h3 class="text-center mb-4">Sign Up</h3>
+            <form id="signupForm" novalidate>
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" required>
+                <div id="usernameMsg" class="error-message"></div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+                <div id="emailMsg"></div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+                <div id="passwordMsg" class="error-message"></div>
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" required>
+                <div id="confirmPasswordMsg" class="error-message"></div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">SIGN UP</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const form = document.getElementById('signupForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    const usernameMsg = document.getElementById('usernameMsg');
+    const emailMsg = document.getElementById('emailMsg');
+    const passwordMsg = document.getElementById('passwordMsg');
+    const confirmPasswordMsg = document.getElementById('confirmPasswordMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      if (username.value.length < 3 || username.value.length > 25) {
+        username.classList.add('is-invalid');
+        usernameMsg.textContent = "Username must be between 3 and 25 characters.";
+        valid = false;
+      } else {
+        username.classList.remove('is-invalid');
+        username.classList.add('is-valid');
+        usernameMsg.textContent = "";
+      }
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.value.match(emailPattern)) {
+        email.classList.add('is-invalid');
+        emailMsg.textContent = "Please enter a valid email.";
+        emailMsg.className = "error-message";
+        valid = false;
+      } else {
+        email.classList.remove('is-invalid');
+        email.classList.add('is-valid');
+        emailMsg.textContent = "Looks good!";
+        emailMsg.className = "valid-message";
+      }
+
+      // Password validation
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+      if (!password.value.match(passwordPattern)) {
+        password.classList.add('is-invalid');
+        passwordMsg.textContent = "Password must have at least 8 characters including 1 lowercase, 1 uppercase, 1 number, and 1 special character (!@#$%^&*).";
+        valid = false;
+      } else {
+        password.classList.remove('is-invalid');
+        password.classList.add('is-valid');
+        passwordMsg.textContent = "";
+      }
+
+      // Confirm Password validation
+      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+        confirmPassword.classList.add('is-invalid');
+        confirmPasswordMsg.textContent = "Please enter the password again.";
+        valid = false;
+      } else {
+        confirmPassword.classList.remove('is-invalid');
+        confirmPassword.classList.add('is-valid');
+        confirmPasswordMsg.textContent = "";
+      }
+
+      if (valid) {
+        alert("Form submitted successfully!");
+        form.reset();
+        document.querySelectorAll('.is-valid').forEach(el => el.classList.remove('is-valid'));
+      }
+    });
+  </script>
+</body>
+</html>

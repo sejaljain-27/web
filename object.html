@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+
+    button {
+      padding: 8px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .student-card {
+      background: #fafafa;
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Management System</h1>
+
+  <div class="container">
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="number" id="roll" placeholder="Enter Roll No">
+    <input type="number" id="marks" placeholder="Enter Marks">
+
+    <button onclick="addStudent()">Add Student</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+
+
+    class Student {
+      constructor(name, roll, marks) {
+        this.name = name;
+        this.roll = roll;
+        this.marks = marks;
+      }
+
+      getGrade() {
+        if (this.marks >= 80) return "A";
+        else if (this.marks >= 60) return "B";
+        else if (this.marks >= 40) return "C";
+        else return "Fail";
+      }
+    }
+
+
+    let students = [];
+
+    function addStudent() {
+      let name = document.getElementById("name").value;
+      let roll = document.getElementById("roll").value;
+      let marks = document.getElementById("marks").value;
+
+      if (name === "" || roll === "" || marks === "") {
+        alert("Please fill all fields");
+        return;
+      }
+
+      let newStudent = new Student(name, roll, parseInt(marks));
+
+      students.push(newStudent);
+
+      displayStudents();
+
+      document.getElementById("name").value = "";
+      document.getElementById("roll").value = "";
+      document.getElementById("marks").value = "";
+    }
+
+    function displayStudents() {
+      let output = "";
+
+      students.forEach(student => {
+        output += `
+          <div class="student-card">
+            <strong>Name:</strong> ${student.name} <br>
+            <strong>Roll No:</strong> ${student.roll} <br>
+            <strong>Marks:</strong> ${student.marks} <br>
+            <strong>Grade:</strong> ${student.getGrade()}
+          </div>
+        `;
+      });
+
+      document.getElementById("result").innerHTML = output;
+    }
+
+  </script>
+
+</body>
+</html>

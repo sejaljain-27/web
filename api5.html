@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background-color: #e6ffe6;
+    }
+    .weather-box {
+      background: white;
+      width: 300px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px gray;
+    }
+    button {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Current Weather (Mumbai)</h2>
+<button onclick="getWeather()">Check Weather</button>
+<div id="weather"></div>
+
+<script>
+function getWeather() {
+  fetch("https://api.open-meteo.com/v1/forecast?latitude=19.07&longitude=72.87&current_weather=true")
+    .then(res => res.json())
+    .then(data => {
+      const weather = data.current_weather;
+      document.getElementById("weather").innerHTML = `
+        <div class="weather-box">
+          <p><b>Temperature:</b> ${weather.temperature} °C</p>
+          <p><b>Wind Speed:</b> ${weather.windspeed} km/h</p>
+        </div>
+      `;
+    });
+}
+</script>
+
+</body>
+</html>

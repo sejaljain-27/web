@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cat Fact</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background-color: #f9e6ff;
+    }
+    .fact {
+      background: white;
+      width: 400px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px gray;
+    }
+    button {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Random Cat Fact</h2>
+<button onclick="getFact()">New Fact</button>
+<div id="fact"></div>
+
+<script>
+function getFact() {
+  fetch("https://catfact.ninja/fact")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("fact").innerHTML =
+        `<div class="fact">${data.fact}</div>`;
+    });
+}
+</script>
+
+</body>
+</html>

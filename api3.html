@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dog Image</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background-color: #fff3e6;
+    }
+    img {
+      width: 300px;
+      margin-top: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px gray;
+    }
+    button {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Random Dog Image</h2>
+<button onclick="getDog()">New Dog</button>
+<div id="dog"></div>
+
+<script>
+function getDog() {
+  fetch("https://dog.ceo/api/breeds/image/random")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("dog").innerHTML =
+        `<img src="${data.message}">`;
+    });
+}
+</script>
+
+</body>
+</html>
